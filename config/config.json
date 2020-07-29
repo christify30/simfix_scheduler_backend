@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "methodmain",
+    "password": null,
+    "database": "scheduler",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "methodmain",
+    "password": null,
+    "database": "scheduler",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "methodmain",
+    "password": null,
+    "database": "scheduler",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  }
+}
