@@ -6,6 +6,7 @@ const sendEmail = async data => {
   await process.env
   const transporter = mailer.createTransport(
     smtp({
+      service:'Zoho',
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
       secure: false,
