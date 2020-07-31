@@ -17,6 +17,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 app.use(`${prefix}task`, task);
+app.get('/' , (req,res)=>{
+    res.send('hello')
+})
 
 app.listen(PORT, () => {
     console.log('Application is up and running and listening to port \%s', PORT);
