@@ -2,7 +2,7 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
-function upload(path,name){
+const upload = (path,name) => {     
     const bucket = process.env.bucket;
     const spacesEndpoint = new AWS.Endpoint('nyc3.digitaloceanspaces.com');
     const s3 = new AWS.S3({
@@ -19,7 +19,6 @@ function upload(path,name){
         key: function (request, file, cb) {
           var newFileName = Date.now() + "-" + name;
           var fullPath = `${process.env.path}/${path}/` + newFileName;
-         // console.log(file);
           if  (file) {
            return cb( null , fullPath );//file.originalname
           }

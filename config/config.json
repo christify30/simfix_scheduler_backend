@@ -8,9 +8,9 @@
     "operatorsAliases": false
   },
   "test": {
-    "username": "methodmain",
+    "username": "chris",
     "password": null,
-    "database": "scheduler",
+    "database": "report",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false

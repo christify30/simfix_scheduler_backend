@@ -18,11 +18,13 @@ const sendEmail = async data => {
   try {
     let mailInfor = await transporter.sendMail({
       from: process.env.EMAIL_ADDRESS,
-      to: userEmail,
+      to: userEmail.join(','),
       subject,
-      text: text || '',
+      text: text || 'test',
       html,
     })
+    console.log(mailInfor,html);
+    
     return mailInfor
   } catch (error) {
       console.log(error); 

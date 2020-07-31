@@ -1,0 +1,35 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+            <html>
+                    <head>
+                        <style>
+                            a{
+                                background:orange;
+                                width:100px;
+                                padding: 10px;
+                                text-decoration: none;
+                                color: white
+                            }
+                        </style>
+                    </head>
+                    <body>
+                      <p>Hello Sir,<p>
+                      <p>Please click on the link below to download your regular document</p>
+                      <a href = 'null' >Download document</a>
+                    </body>
+                  </html> 
+        <input id="d" type="date"/>
+        <input id="e" type="time"/>
+        <script>
+          const i =   document.querySelector('#d');
+          const j =   document.querySelector('#e');
+          document.addEventListener('change', e=>{
+              console.log(i.value + 'T' + j.value + ':00');  
+          })
+        </script>
+    </body>
+
+</html>

@@ -1,52 +1,49 @@
 'use strict'
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes){
     const schedules = sequelize.define('schedules', {
-        type: {
-            type: DataTypes.ENUM(['one_off', 'continues', 'with_stop'])
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notNull: {
+                    msg: 'The title field is required'
+                }
+            }
         },
-        interval: {
+        start_date:{
+            type: DataTypes.STRING,
+        },
+        type:{
+            type: DataTypes.ENUM(['one_off', 'recurrent', 'recurrent_stop'])
+        },
+        end_date:{
+            type: DataTypes.STRING
+        },
+        frequency: {
             type: DataTypes.INTEGER
         },
-        start_date: {
-            type:DataTypes.DATE,
+        recipients: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
             validate: {
                 notNull: {
-                    msg: 'The start date is required'
+                    msg: 'The recipients field is compulsary'
                 }
             }
         },
-        end_date: {
-            type: DataTypes.DATE
+        status: {
+            type: DataTypes.ENUM(['pending', 'running', 'completed', 'cancelled']),
+            defaultValue: 'pending'
         },
-        document_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'The document id is required'
-                }
-            }
+        document:{
+            type: DataTypes.STRING
         },
-        users: {
-            type: DataTypes.ARRAY(DataTypes.INTEGER),
-            allowNull:false,
-            validate: {
-                notNull: {
-                    msg: 'you must include users'
-                }
-            }
+        time_zone:{
+            type: DataTypes.STRING
         }
-    },{
-        timestamps: true,
-        sequelize,
-        paranoid: true,
     });
-    schedules.associate = function(models){
-        models.schedules.belongsTo(models.documents, {
-            foreignKey: 'document_id',
-        })
-    }
+
+   // schedules.sync({force:true}) //{force:true}
     return schedules;
 }
