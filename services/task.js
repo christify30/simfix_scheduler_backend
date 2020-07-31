@@ -62,6 +62,7 @@ class Task {
            const tasks = await models.schedules.findAll({order: [['createdAt', 'DESC']]});
            return response.success({ res: this.res, message:'Task fetched successfully', data:tasks });
        } catch (error) {
+           console.log(error);
            return response.error({ res:this.res,  error: 'Error fetching tasks' });
        }
    }
