@@ -44,6 +44,6 @@ module.exports = function(sequelize, DataTypes){
         }
     });
 
-   // schedules.sync({force:true}) //{force:true}
+    schedules.sync({force:true}) //{force:true}
     return schedules;
 }
