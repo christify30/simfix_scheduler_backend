@@ -3,11 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const CronJob = require('cron').CronJob;
 const task = require('./controllers/schedules');
-
-
-const job = {};
 
 const PORT = process.env.PORT;
 const prefix = '/api/v1/';

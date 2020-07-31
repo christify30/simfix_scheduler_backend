@@ -24,11 +24,11 @@ const sendEmail = async data => {
       text: text || 'test',
       html,
     })
-    console.log(mailInfor,html);
+   // console.log(mailInfor,html);
     
     return mailInfor
   } catch (error) {
-      console.log(error); 
+     // console.log(error); 
   }
 }
 module.exports = sendEmail
