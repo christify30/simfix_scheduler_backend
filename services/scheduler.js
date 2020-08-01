@@ -27,6 +27,7 @@ class Scheduler {
         recipients = this.recipients,
         frequency = this.frequency,
         updateTask =this.updateTask,
+        getPattern = this.getPattern,
         type = this.type;
         job[id] = new CronJob(date, function() {
             const d = new Date();
@@ -37,10 +38,10 @@ class Scheduler {
                     updateTask(id,'completed')
                 break;
                 case 'recurrent':
-                    continues(recipients, document, frequency, id, updateTask)
+                    continues(recipients, document, frequency, id, updateTask, getPattern)
                 break;
                 case 'recurrent_stop':
-                    continueUntil(recipients, document, frequency, id, end_date, updateTask)
+                    continueUntil(recipients, document, frequency, id, end_date, updateTask, getPattern)
                 break;
                 default :
                 break
@@ -50,10 +51,10 @@ class Scheduler {
         job[id].start();
     }
 
-    continueUntil(recipients, document, frequency, id, end_date, updateTask){
+    continueUntil(recipients, document, frequency, id, end_date, updateTask, getPattern){
            // console.log('Before job instantiation');
             updateTask(id,'running')
-            const cron_pattern = this.getPattern(frequency);
+            const cron_pattern = getPattern(frequency);
             mailer(template.sendDucomentTemplate(recipients, document))
             job[id] = new CronJob(cron_pattern, function() {
             mailer(template.sendDucomentTemplate(recipients, document))
@@ -75,10 +76,10 @@ class Scheduler {
         job[id]['1'].start();
     }
 
-    continues(recipients, document, frequency, id, updateTask){
+    continues(recipients, document, frequency, id, updateTask, getPattern){
         //console.log('Before job instantiation');
         updateTask(id,'running')
-        const cron_pattern = this.getPattern(frequency);
+        const cron_pattern = getPattern(frequency);
         mailer(template.sendDucomentTemplate(recipients, document)) 
         job[id] = new CronJob(cron_pattern, function() {
         //const d = new Date();
