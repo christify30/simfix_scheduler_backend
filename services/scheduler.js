@@ -54,11 +54,7 @@ class Scheduler {
     continueUntil(recipients, document, frequency, id, end_date, updateTask, getPattern){
            // console.log('Before job instantiation');
             updateTask(id,'running')
-<<<<<<< HEAD
             const cron_pattern = getPattern(frequency);
-=======
-            const cron_pattern =this.getPattern(frequency);
->>>>>>> 7c0ec430d73640192b55db048c6f24e0ab45a91f
             mailer(template.sendDucomentTemplate(recipients, document))
             job[id] = new CronJob(cron_pattern, function() {
             mailer(template.sendDucomentTemplate(recipients, document))
