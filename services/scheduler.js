@@ -79,9 +79,9 @@ class Scheduler {
     continues(recipients, document, frequency, id, updateTask, getPattern){
         //console.log('Before job instantiation');
         updateTask(id,'running')
-        console.log("cron_pattern");
+       // console.log("cron_pattern");
         const cron_pattern = getPattern(frequency);
-        console.log(cron_pattern);
+       // console.log(cron_pattern);
         
         mailer(template.sendDucomentTemplate(recipients, document)) 
         job[id] = new CronJob(cron_pattern, function() {
