@@ -18,7 +18,7 @@ class Scheduler {
     }
 
     startAt() {
-        console.log('Before job instantiation');
+       // console.log('Before job instantiation');
         const date = new Date(this.date.start_date),
         end_date = new Date((this.date.end_date || 0)),
         continueUntil = this.continueUntil, continues = this.continues, oneOff = this.oneOff,
@@ -28,10 +28,9 @@ class Scheduler {
         frequency = this.frequency,
         updateTask =this.updateTask,
         type = this.type;
-
         job[id] = new CronJob(date, function() {
             const d = new Date();
-            console.log('Specific date:', date, ', onTick at:', d);
+           // console.log('Specific date:', date, ', onTick at:', d);
             switch(type){
                 case 'one_off':
                     oneOff(recipients, document)
@@ -47,54 +46,51 @@ class Scheduler {
                 break
             }
         });
-        console.log('After job instantiation');
-        job[this.id].start();
+        //console.log('After job instantiation');
+        job[id].start();
     }
 
     continueUntil(recipients, document, frequency, id, end_date, updateTask){
-            console.log('Before job instantiation');
+           // console.log('Before job instantiation');
             updateTask(id,'running')
+            const cron_pattern =this.getPattern(frequency);
             mailer(template.sendDucomentTemplate(recipients, document))
-            job[id] = new CronJob(`0 */${frequency} * * * *`, function() {
+            job[id] = new CronJob(cron_pattern, function() {
             mailer(template.sendDucomentTemplate(recipients, document))
             const d = new Date();
-            console.log('At every  Minutes: sending mails', d);
+            //console.log('At every  Minutes: sending mails', d);
         });
         job[id].start();
-        let date = new Date();
-        let date2 = new Date();
-        
-        date.setMinutes(date.getMinutes()+1);
         job[id]['1'] = new CronJob(end_date, function() {
             const d = new Date();
-            console.log('Specific date:', date2, ',stop sending mails... onTick at:', d);
+            //console.log('Specific date:', date2, ',stop sending mails... onTick at:', d);
             try{
                 job[id].stop();
                 job[id]['1'].stop();
                 updateTask(id,'completed')
             }catch(error){
                 //log error
-            }
-              
+            }    
         });
         job[id]['1'].start();
     }
 
     continues(recipients, document, frequency, id, updateTask){
-        console.log('Before job instantiation');
+        //console.log('Before job instantiation');
         updateTask(id,'running')
+        const cron_pattern = this.getPattern(frequency);
         mailer(template.sendDucomentTemplate(recipients, document)) 
-        job[id] = new CronJob(`0 */${frequency} * * * *`, function() {
-        const d = new Date();
+        job[id] = new CronJob(cron_pattern, function() {
+        //const d = new Date();
         mailer(template.sendDucomentTemplate(recipients, document)) 
-        console.log('At Ten Minutes:', d);
+       // console.log('At Ten Minutes:', d);
        });
        //console.log('After job instantiation');
        job[id].start();
     }
 
     oneOff(recipients, document){
-        console.log("sent once");
+       // console.log("sent once");
         mailer(template.sendDucomentTemplate(recipients, document))
     }
 
@@ -125,11 +121,25 @@ class Scheduler {
             this.updateTask(this.id,'cancelled')
             return true
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             this.updateTask(this.id,'cancelled')
             return false;
         }
     }
+}
+
+const getPattern = (frequency) => {
+    const Frequency = Number(frequency);
+    let cron_pattern = '* * * * * *'
+    if(Frequency<60){
+        cron_pattern `0 */${frequency} * * * *`
+    }else if(Frequency >= 60 && Frequency < 1440 ) {
+        cron_pattern = `0 0 */${(Number(frequency)/Number(60))} * * *`
+    }else if(Frequency >= 1440) {
+        cron_pattern = `0 0 0 */${(Number(frequency)/Number(1440))} * *`
+    }  
+
+    return cron_pattern
 }
 
 module.exports = Scheduler;

@@ -1,7 +1,6 @@
 const Scheduler = require('./scheduler');
 const response = require('../scripts/response');
 const models = require('../models');
-const validation = require('../validator');
 
 class Task {
     constructor(req, res) {
@@ -19,8 +18,6 @@ class Task {
 
    async stopTask() {
        const { id } = this.req.body;
-       console.log(id);
-       
        try {
            const task = await models.schedules.findOne({
                where:{
@@ -37,8 +34,6 @@ class Task {
            }
        } catch (error) {
            //log error
-           console.log(error);
-           
            return response.error({res:this.res, error:'This task does not exist'});
        }
    }
@@ -52,7 +47,6 @@ class Task {
         })
         return saveTask;
        } catch (error) {
-           console.log(error);
            return false;
        }
    }
@@ -62,7 +56,7 @@ class Task {
            const tasks = await models.schedules.findAll({order: [['createdAt', 'DESC']]});
            return response.success({ res: this.res, message:'Task fetched successfully', data:tasks });
        } catch (error) {
-           console.log(error);
+           //console.log(error);
            return response.error({ res:this.res,  error: 'Error fetching tasks' });
        }
    }
