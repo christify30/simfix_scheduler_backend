@@ -126,20 +126,23 @@ class Scheduler {
             return false;
         }
     }
+
+    getPattern(frequency){
+        const Frequency = Number(frequency);
+        let cron_pattern = '* * * * * *'
+        if(Frequency<60){
+            cron_pattern `0 */${frequency} * * * *`
+        }else if(Frequency >= 60 && Frequency < 1440 ) {
+            cron_pattern = `0 0 */${(Number(frequency)/Number(60))} * * *`
+        }else if(Frequency >= 1440) {
+            cron_pattern = `0 0 0 */${(Number(frequency)/Number(1440))} * *`
+        }  
+    
+        return cron_pattern
+     
+    }
 }
 
-const getPattern = (frequency) => {
-    const Frequency = Number(frequency);
-    let cron_pattern = '* * * * * *'
-    if(Frequency<60){
-        cron_pattern `0 */${frequency} * * * *`
-    }else if(Frequency >= 60 && Frequency < 1440 ) {
-        cron_pattern = `0 0 */${(Number(frequency)/Number(60))} * * *`
-    }else if(Frequency >= 1440) {
-        cron_pattern = `0 0 0 */${(Number(frequency)/Number(1440))} * *`
-    }  
 
-    return cron_pattern
-}
 
 module.exports = Scheduler;
